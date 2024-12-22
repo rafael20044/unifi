@@ -19,7 +19,7 @@ import java.net.URI;
 @RequestMapping("/login")
 public class LoginController {
 
-    private UsuarioServicio servicio;
+    private final UsuarioServicio servicio;
 
     @Autowired
     public LoginController(UsuarioServicio servicio){
