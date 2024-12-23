@@ -31,6 +31,7 @@ public class Usuario {
 
     private LocalDateTime fechaCreacion;
 
+    @Enumerated(EnumType.STRING)
     private Estado estado;
 
     public Usuario(UsuarioCrear crear, String claveEncoded){
