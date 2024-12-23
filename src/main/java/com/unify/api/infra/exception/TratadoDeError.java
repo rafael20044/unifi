@@ -1,6 +1,7 @@
 package com.unify.api.infra.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,11 @@ public class TratadoDeError {
 
     @ExceptionHandler(CorreoRepetido.class)
     public ResponseEntity<String> correoRepetido(CorreoRepetido e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> datosInvalidos(MethodArgumentNotValidException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

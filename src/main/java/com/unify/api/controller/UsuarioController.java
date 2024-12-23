@@ -1,16 +1,14 @@
 package com.unify.api.controller;
 
+import com.unify.api.domain.usuario.dto.UsuarioActualizar;
 import com.unify.api.domain.usuario.dto.UsuarioBuscar;
 import com.unify.api.domain.usuario.service.UsuarioServicio;
-import org.aspectj.apache.bcel.Repository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -35,5 +33,17 @@ public class UsuarioController {
     public ResponseEntity<Page<UsuarioBuscar>> buscarTodos(Pageable pageable){
         Page<UsuarioBuscar> lista = servicio.buscarTodosActivos(pageable);
         return ResponseEntity.ok(lista);
+    }
+
+    @PutMapping
+    public ResponseEntity<UsuarioBuscar> actualizar(@RequestBody @Valid UsuarioActualizar actualizar){
+        UsuarioBuscar buscar = servicio.actualizar(actualizar);
+        return ResponseEntity.ok(buscar);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable Long id){
+        servicio.eliminar(id);
+        return ResponseEntity.ok().build();
     }
 }

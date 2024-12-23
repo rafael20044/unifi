@@ -1,5 +1,6 @@
 package com.unify.api.domain.usuario.service;
 
+import com.unify.api.domain.usuario.dto.UsuarioActualizar;
 import com.unify.api.domain.usuario.dto.UsuarioBuscar;
 import com.unify.api.domain.usuario.dto.UsuarioCrear;
 import com.unify.api.domain.usuario.dto.UsuarioRespuesta;
@@ -49,5 +50,26 @@ public class UsuarioServicio implements IUsuarioServicio{
     @Override
     public Page<UsuarioBuscar> buscarTodosActivos(Pageable pageable) {
         return repository.buscarTodosActivos(pageable).map(UsuarioBuscar::new);
+    }
+
+    @Override
+    public UsuarioBuscar actualizar(UsuarioActualizar actualizar) {
+        Usuario u = repository.findById(actualizar.id()).orElseThrow(() ->
+                new NoEncontrada("Usuario no existente"));
+        Optional<Usuario> verificarCorreo = repository.findByCorreo(actualizar.correo());
+        if (verificarCorreo.isEmpty()) {
+            String passEncoder = actualizar.clave() != null ? encoder.encode(actualizar.clave()) : null;
+            u.actualizar(actualizar, passEncoder);
+            repository.save(u);
+            return new UsuarioBuscar(u);
+        }
+        throw new CorreoRepetido("Correo exitente");
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new NoEncontrada("Usuario no existente"));
+        usuario.ponerInactivo();
+        repository.save(usuario);
     }
 }
