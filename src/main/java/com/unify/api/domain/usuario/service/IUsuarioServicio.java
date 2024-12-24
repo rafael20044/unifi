@@ -4,6 +4,7 @@ import com.unify.api.domain.usuario.dto.UsuarioActualizar;
 import com.unify.api.domain.usuario.dto.UsuarioBuscar;
 import com.unify.api.domain.usuario.dto.UsuarioCrear;
 import com.unify.api.domain.usuario.dto.UsuarioRespuesta;
+import com.unify.api.domain.usuario.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,6 @@ public interface IUsuarioServicio {
     UsuarioBuscar actualizar(UsuarioActualizar actualizar);
 
     void eliminar(Long id);
+
+    Usuario buscarEntidad(Long id);
 }

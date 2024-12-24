@@ -72,4 +72,9 @@ public class UsuarioServicio implements IUsuarioServicio{
         usuario.ponerInactivo();
         repository.save(usuario);
     }
+
+    @Override
+    public Usuario buscarEntidad(Long id) {
+        return repository.findById(id).orElseThrow(() -> new NoEncontrada("Usuario no existente"));
+    }
 }

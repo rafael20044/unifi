@@ -2,6 +2,7 @@ package com.unify.api.domain.publicacion.entity;
 
 import com.unify.api.domain.comentario.entity.Comentario;
 import com.unify.api.domain.enums.EstadoPublicacion;
+import com.unify.api.domain.publicacion.dto.PublicacionCrear;
 import com.unify.api.domain.reaccion.entity.Reaccion;
 import com.unify.api.domain.usuario.entity.Usuario;
 import jakarta.persistence.*;
@@ -41,4 +42,11 @@ public class Publicacion {
 
     @Enumerated(EnumType.STRING)
     private EstadoPublicacion estado;
+
+    public Publicacion(PublicacionCrear crear, Usuario usuario) {
+        this.contenido = crear.contenido();
+        this.usuario = usuario;
+        this.fechaCreacion = LocalDateTime.now();
+        this.estado = EstadoPublicacion.ACTIVO;
+    }
 }
