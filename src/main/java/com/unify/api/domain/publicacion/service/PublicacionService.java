@@ -1,5 +1,6 @@
 package com.unify.api.domain.publicacion.service;
 
+import com.unify.api.domain.comentario.entity.Comentario;
 import com.unify.api.domain.publicacion.dto.PublicacionBuscar;
 import com.unify.api.domain.publicacion.dto.PublicacionCrear;
 import com.unify.api.domain.publicacion.dto.PublicacionRespuesta;
@@ -42,5 +43,12 @@ public class PublicacionService implements IPublicacionService{
     public Publicacion buscarEntidad(Long id) {
         return respository.findById(id).orElseThrow(() ->
                 new NoEncontrada("Publicacion no existente"));
+    }
+
+    @Override
+    public void agregarCometario(Comentario cometario) {
+        Publicacion publicacion = cometario.getPublicacion();
+        publicacion.agregarCometario(cometario);
+        respository.save(publicacion);
     }
 }

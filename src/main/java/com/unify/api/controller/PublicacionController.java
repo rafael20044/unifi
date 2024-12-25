@@ -35,6 +35,7 @@ public class PublicacionController {
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<PublicacionBuscar> buscar(@PathVariable Long id){
         PublicacionBuscar buscar = service.buscar(id);
         return ResponseEntity.ok(buscar);

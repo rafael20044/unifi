@@ -49,4 +49,8 @@ public class Publicacion {
         this.fechaCreacion = LocalDateTime.now();
         this.estado = EstadoPublicacion.ACTIVO;
     }
+
+    public void agregarCometario(Comentario comentario){
+        this.comentarios.add(comentario);
+    }
 }

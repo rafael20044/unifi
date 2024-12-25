@@ -29,7 +29,10 @@ public class ComentarioService implements IComentarioService{
     public ComentarioRespuesta crear(ComentarioCrear crear) {
         Usuario usuario = servicioUsuario.buscarEntidad(crear.autor().id());
         Publicacion publicacion = servicePublicacion.buscarEntidad(crear.publicacion().id());
-        Comentario comentarioPadre = repository.findById(crear.comentarioPabre().id()).orElse(null);
+        Comentario comentarioPadre = null;
+        if (crear.comentarioPabre() != null && crear.comentarioPabre().id() != null) {
+            comentarioPadre = repository.findById(crear.comentarioPabre().id()).orElse(null);
+        }
         Comentario comentario = new Comentario(crear, usuario, publicacion, comentarioPadre);
         repository.save(comentario);
         return new ComentarioRespuesta(comentario);
