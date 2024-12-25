@@ -35,7 +35,12 @@ public class PublicacionService implements IPublicacionService{
     public PublicacionBuscar buscar(Long id) {
         Publicacion publicacion = respository.findById(id).orElseThrow(() ->
                 new NoEncontrada("Publicacion no existente"));
-        PublicacionBuscar buscar = new PublicacionBuscar(publicacion);
-        return buscar;
+        return new PublicacionBuscar(publicacion);
+    }
+
+    @Override
+    public Publicacion buscarEntidad(Long id) {
+        return respository.findById(id).orElseThrow(() ->
+                new NoEncontrada("Publicacion no existente"));
     }
 }

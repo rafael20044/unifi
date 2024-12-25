@@ -1,5 +1,6 @@
 package com.unify.api.domain.comentario.entity;
 
+import com.unify.api.domain.comentario.dto.ComentarioCrear;
 import com.unify.api.domain.publicacion.entity.Publicacion;
 import com.unify.api.domain.usuario.entity.Usuario;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -38,4 +40,15 @@ public class Comentario {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comentarioPadre")
     private List<Comentario> comentarios;
+
+    private LocalDateTime fechaCreacion;
+
+
+    public Comentario(ComentarioCrear crear, Usuario usuario, Publicacion publicacion, Comentario cometarioPadre) {
+        this.usuario = usuario;
+        this.publicacion = publicacion;
+        this.comentarioPadre = cometarioPadre;
+        this.contenido = crear.contenido();
+        this.fechaCreacion = LocalDateTime.now();
+    }
 }
