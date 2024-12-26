@@ -3,6 +3,7 @@ package com.unify.api.domain.publicacion.service;
 import com.unify.api.domain.comentario.entity.Comentario;
 import com.unify.api.domain.publicacion.dto.PublicacionBuscar;
 import com.unify.api.domain.publicacion.dto.PublicacionCrear;
+import com.unify.api.domain.publicacion.dto.PublicacionEditar;
 import com.unify.api.domain.publicacion.dto.PublicacionRespuesta;
 import com.unify.api.domain.publicacion.entity.Publicacion;
 import com.unify.api.domain.publicacion.repository.PublicacionRespository;
@@ -50,5 +51,19 @@ public class PublicacionService implements IPublicacionService{
         Publicacion publicacion = cometario.getPublicacion();
         publicacion.agregarCometario(cometario);
         respository.save(publicacion);
+    }
+
+    @Override
+    public PublicacionBuscar editar(PublicacionEditar editar) {
+        Publicacion publicacion = respository.findById(editar.id()).orElseThrow(() ->
+                new NoEncontrada("Publicacion no encontrada"));
+        publicacion.actualizar(editar);
+        respository.save(publicacion);
+        return new PublicacionBuscar(publicacion);
+    }
+
+    @Override
+    public void borrar(Long id) {
+        respository.deleteById(id);
     }
 }

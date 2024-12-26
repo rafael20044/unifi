@@ -1,5 +1,6 @@
 package com.unify.api.domain.comentario.service;
 
+import com.unify.api.domain.comentario.dto.ComentarioBuscar;
 import com.unify.api.domain.comentario.dto.ComentarioCrear;
 import com.unify.api.domain.comentario.dto.ComentarioRespuesta;
 import com.unify.api.domain.comentario.entity.Comentario;
@@ -8,6 +9,7 @@ import com.unify.api.domain.publicacion.entity.Publicacion;
 import com.unify.api.domain.publicacion.service.PublicacionService;
 import com.unify.api.domain.usuario.entity.Usuario;
 import com.unify.api.domain.usuario.service.UsuarioServicio;
+import com.unify.api.infra.exception.NoEncontrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,11 @@ public class ComentarioService implements IComentarioService{
         Comentario comentario = new Comentario(crear, usuario, publicacion, comentarioPadre);
         repository.save(comentario);
         return new ComentarioRespuesta(comentario);
+    }
+
+    public ComentarioBuscar buscar(Long id){
+        Comentario comentario = repository.findById(id).orElseThrow(() ->
+                new NoEncontrada("Comentario no existente"));
+        return new ComentarioBuscar(comentario);
     }
 }

@@ -3,6 +3,7 @@ package com.unify.api.domain.publicacion.entity;
 import com.unify.api.domain.comentario.entity.Comentario;
 import com.unify.api.domain.enums.EstadoPublicacion;
 import com.unify.api.domain.publicacion.dto.PublicacionCrear;
+import com.unify.api.domain.publicacion.dto.PublicacionEditar;
 import com.unify.api.domain.reaccion.entity.Reaccion;
 import com.unify.api.domain.usuario.entity.Usuario;
 import jakarta.persistence.*;
@@ -52,5 +53,11 @@ public class Publicacion {
 
     public void agregarCometario(Comentario comentario){
         this.comentarios.add(comentario);
+    }
+
+    public void actualizar(PublicacionEditar editar){
+        if (editar != null) {
+            this.contenido = editar.contenido();
+        }
     }
 }

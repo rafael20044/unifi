@@ -2,6 +2,7 @@ package com.unify.api.controller;
 
 import com.unify.api.domain.publicacion.dto.PublicacionBuscar;
 import com.unify.api.domain.publicacion.dto.PublicacionCrear;
+import com.unify.api.domain.publicacion.dto.PublicacionEditar;
 import com.unify.api.domain.publicacion.dto.PublicacionRespuesta;
 import com.unify.api.domain.publicacion.entity.Publicacion;
 import com.unify.api.domain.publicacion.service.PublicacionService;
@@ -39,5 +40,18 @@ public class PublicacionController {
     public ResponseEntity<PublicacionBuscar> buscar(@PathVariable Long id){
         PublicacionBuscar buscar = service.buscar(id);
         return ResponseEntity.ok(buscar);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<PublicacionBuscar> editar(@RequestBody PublicacionEditar editar){
+        PublicacionBuscar buscar = service.editar(editar);
+        return ResponseEntity.ok(buscar);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable Long id){
+        service.borrar(id);
+        return ResponseEntity.ok().build();
     }
 }
